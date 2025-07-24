@@ -1,0 +1,2158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colibry - Your AI Employee That Never Sleeps</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            height: 101px; /* Reduced by another 15% from 119px */
+            display: flex;
+            align-items: center;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 0; /* Remove vertical padding, use header height instead */
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+            .nav-links a {
+                text-decoration: none;
+                color: #333;
+                font-weight: 500;
+                transition: color 0.3s ease;
+            }
+
+                .nav-links a:hover {
+                    color: #667eea;
+                }
+
+        .cta-button {
+            background: linear-gradient(135deg, #12BBAF 0%, #0CA39A 100%);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(18, 187, 175, 0.15);
+        }
+
+            .cta-button:hover {
+                background: linear-gradient(135deg, #0CA39A 0%, #12BBAF 100%);
+                color: #fff;
+                transform: translateY(-2px) scale(1.04);
+                box-shadow: 0 10px 30px rgba(18, 187, 175, 0.25);
+            }
+
+        /* Hero Section */
+        .hero {
+            background: url('hero-bg.jpg') center center/cover no-repeat;
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .hero::before {
+                content: none;
+            }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero .highlight {
+            background: linear-gradient(45deg, #00d4ff, #5b86e5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .primary-button {
+            background: linear-gradient(135deg, #5FE3D0, #12BBAF);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+            .primary-button:hover {
+                background: linear-gradient(135deg, #12BBAF, #5FE3D0);
+                color: #fff;
+                transform: translateY(-2px) scale(1.04);
+                box-shadow: 0 10px 30px rgba(18, 187, 175, 0.25);
+            }
+
+        .secondary-button {
+            background: transparent;
+            color: #12BBAF;
+            padding: 1rem 2rem;
+            border: 2px solid #12BBAF;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+            .secondary-button:hover {
+                background: #12BBAF;
+                color: white;
+            }
+
+        .hero-features {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+            .hero-feature i {
+                color: #00d4ff;
+            }
+
+        /* Problem Section */
+        .problem-section {
+            padding: 100px 0;
+            background: #f8fafc;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #12BBAF, #0CA39A);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1a202c;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .problem-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .problem-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            }
+
+        .problem-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #12BBAF, #0CA39A);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .problem-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1a202c;
+        }
+
+        .problem-card p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .problem-stat {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #12BBAF;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Solution Section */
+        .solution-section {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .solution-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .solution-features {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #0CA39A, #087C74);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .feature-content h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1a202c;
+        }
+
+        .feature-content p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .solution-visual {
+            background: linear-gradient(135deg, #087C74, #0CA39A);
+            border-radius: 20px;
+            padding: 3rem;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .solution-visual::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+                background-size: 20px 20px;
+                animation: float 20s infinite linear;
+            }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-20px, -20px) rotate(360deg);
+            }
+        }
+
+        .agent-preview {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+            .agent-preview h4 {
+                font-size: 1.3rem;
+                margin-bottom: 1rem;
+            }
+
+        .chat-bubble {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 0.5rem 0;
+            text-align: left;
+        }
+
+        /* Comparison Section */
+        .comparison-section {
+            padding: 100px 0;
+            background: #f8fafc;
+        }
+
+        .comparison-table {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            margin-top: 3rem;
+        }
+
+        .comparison-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            background: linear-gradient(135deg, #045C54, #087C74);
+            color: white;
+        }
+
+            .comparison-header div {
+                padding: 2rem;
+                text-align: center;
+                font-weight: 600;
+                font-size: 1.2rem;
+            }
+
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+            .comparison-row:last-child {
+                border-bottom: none;
+            }
+
+        .comparison-cell {
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+            .comparison-cell:first-child {
+                background: #f8fafc;
+                font-weight: 600;
+                color: #1a202c;
+            }
+
+            .comparison-cell.negative {
+                color: #ef4444;
+            }
+
+            .comparison-cell.positive {
+                color: #10b981;
+                font-weight: 600;
+            }
+
+        .comparison-result {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+            .pricing-card.popular {
+                border-color: #5FE3D0;
+                transform: scale(1.05);
+                box-shadow: 0 20px 60px rgba(95, 227, 208, 0.15);
+            }
+
+                .pricing-card.popular::before {
+                    content: 'Most Popular';
+                    position: absolute;
+                    top: -15px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: linear-gradient(135deg, #12BBAF, #5FE3D0);
+                    color: white;
+                    padding: 0.5rem 1.5rem;
+                    border-radius: 50px;
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                }
+
+            .pricing-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 30px 80px rgba(0, 0, 0, 0.15);
+            }
+
+            .pricing-card.popular:hover {
+                transform: scale(1.05) translateY(-5px);
+            }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1a202c;
+        }
+
+        .plan-price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #12BBAF;
+            margin-bottom: 0.5rem;
+        }
+
+            .plan-price span {
+                font-size: 1rem;
+                color: #64748b;
+                font-weight: 400;
+            }
+
+        .plan-description {
+            color: #64748b;
+            margin-bottom: 2rem;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+            .plan-features li {
+                padding: 0.5rem 0;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+                .plan-features li i {
+                    color: #10b981;
+                }
+
+        .plan-button {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #5FE3D0;
+            background: transparent;
+            color: #12BBAF;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .plan-button:hover,
+            .popular .plan-button {
+                background: linear-gradient(135deg, #5FE3D0, #12BBAF);
+                color: white;
+            }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            padding: 100px 0;
+            background: #f8fafc;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            align-items: stretch;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(4, 92, 84, 0.12);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            min-height: 420px;
+        }
+
+            .testimonial-card:hover {
+                transform: translateY(-5px);
+            }
+
+        .stars {
+            color: #fbbf24;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .author-info {
+            text-align: center;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #045C54, #087C74);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .author-info h5 {
+            font-weight: 600;
+            color: #1a202c;
+        }
+
+        .author-info p {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            color: #667eea;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #045C54;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* Integrations Section */
+        .integrations-section {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .integrations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .integration-card {
+            background: #f8fafc;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+            .integration-card:hover {
+                border-color: #667eea;
+                transform: translateY(-5px);
+                background: white;
+                box-shadow: 0 20px 40px rgba(102, 126, 234, 0.1);
+            }
+
+        .integration-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+            .integration-icon.crm {
+                background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            }
+
+            .integration-icon.email {
+                background: linear-gradient(135deg, #ef4444, #dc2626);
+            }
+
+            .integration-icon.messaging {
+                background: linear-gradient(135deg, #10b981, #059669);
+            }
+
+            .integration-icon.chat {
+                background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            }
+
+            .integration-icon.workspace {
+                background: linear-gradient(135deg, #f59e0b, #d97706);
+            }
+
+            .integration-icon.phone {
+                background: linear-gradient(135deg, #6366f1, #4f46e5);
+            }
+
+        .integration-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1a202c;
+        }
+
+        .integration-description {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #087C74 0%, #032B2A 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        .cta-form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            margin-top: 3rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+        }
+
+            .form-group input::placeholder,
+            .form-group textarea::placeholder {
+                color: rgba(255, 255, 255, 0.7);
+            }
+
+            .form-group input:focus,
+            .form-group select:focus,
+            .form-group textarea:focus {
+                outline: none;
+                border-color: rgba(255, 255, 255, 0.8);
+                background: rgba(255, 255, 255, 0.2);
+            }
+
+        .submit-button {
+            background: linear-gradient(135deg, #5FE3D0, #12BBAF);
+            color: white;
+            padding: 1rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+            .submit-button:hover {
+                background: linear-gradient(135deg, #12BBAF, #5FE3D0);
+                color: #fff;
+                transform: translateY(-2px) scale(1.04);
+                box-shadow: 0 10px 30px rgba(18, 187, 175, 0.25);
+            }
+
+        .cta-features {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+            .cta-feature i {
+                color: #00d4ff;
+            }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #021818 0%, #032B2A 100%);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-brand p {
+            color: #a0aec0;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+            .social-links a {
+                width: 40px;
+                height: 40px;
+                background: linear-gradient(135deg, #5FE3D0, #12BBAF);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #032B2A;
+                text-decoration: none;
+                transition: transform 0.3s ease, background 0.3s, color 0.3s;
+            }
+
+                .social-links a:hover {
+                    transform: translateY(-2px) scale(1.08);
+                    background: linear-gradient(135deg, #12BBAF, #5FE3D0);
+                    color: #fff;
+                }
+
+        .footer-section h4 {
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+            .footer-section ul li {
+                margin-bottom: 0.5rem;
+            }
+
+                .footer-section ul li a {
+                    color: #a0aec0;
+                    text-decoration: none;
+                    transition: color 0.3s ease;
+                }
+
+                    .footer-section ul li a:hover {
+                        color: #667eea;
+                    }
+
+        .footer-bottom {
+            border-top: 1px solid #2d3748;
+            padding-top: 2rem;
+            text-align: center;
+            color: #a0aec0;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .hero-features {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .solution-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .comparison-header,
+            .comparison-row {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-cell:first-child {
+                background: #667eea;
+                color: white;
+                font-weight: 600;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Add hamburger and dropdown styles */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            position: absolute;
+            top: 50%;
+            left: 40px;
+            transform: translateY(-50%);
+            z-index: 1100;
+        }
+
+            .hamburger .bar {
+                width: 28px;
+                height: 4px;
+                background: #111;
+                margin: 4px 0;
+                border-radius: 2px;
+                transition: all 0.3s cubic-bezier(.4,2,.6,1);
+            }
+
+            .hamburger:hover .bar {
+                background: #12BBAF;
+            }
+
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+        .dropdown-menu {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+            border-radius: 0 0 16px 16px;
+            min-width: 180px;
+            padding: 1rem 0;
+            z-index: 1099;
+            animation: fadeInMenu 0.3s;
+        }
+
+            .dropdown-menu a {
+                color: #333;
+                text-decoration: none;
+                padding: 0.75rem 2rem;
+                font-weight: 500;
+                transition: background 0.2s, color 0.2s;
+            }
+
+                .dropdown-menu a:hover {
+                    background: #f3f4f6;
+                    color: #12BBAF;
+                }
+
+            .dropdown-menu.show {
+                display: flex;
+            }
+
+        @keyframes fadeInMenu {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cta-button {
+                margin-left: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header style="position: relative;">
+        <button class="hamburger" aria-label="Open menu" aria-expanded="false" style="position: absolute; top: 50%; left: 40px; transform: translateY(-50%); margin: 0; z-index: 1100;"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
+        <a href="#home" class="header-logo" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 1100; display: flex; align-items: center; justify-content: center;">
+            <img src="colibry-logo.png" alt="Colibry Logo" style="height: 144px; width: auto; display: block;" />
+        </a>
+        <a href="#demo" class="cta-button" style="position: absolute; top: 50%; right: 24px; transform: translateY(-50%); z-index: 1100;">Get Live Demo</a>
+        <nav class="container" style="padding-left: 80px; padding-right: 80px; display: flex; align-items: center; justify-content: flex-start;">
+            <div class="dropdown-menu">
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#integrations">Integrations</a>
+                <a href="#testimonials">Case Studies</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-rocket"></i> Introducing the Future of AI Workforce
+                </div>
+                <h1>Meet <img src="aigent-logo.png" alt="AIgent" style="height: 3.2em; vertical-align: middle; display: inline-block; margin: 0 0.2em;" /><br>Your AI Employee That Never Sleeps</h1>
+                <p>
+                    AIgent is a flagship enterprise AI agent powered by Python‑LangChain,<br>
+                    Seamlessly integrating with your CRM for real‑time analytics,<br>
+                    multilingual messaging, and customizable workflows.<br>
+                    Available in Basic, Pro, and Enterprise SaaS plans with 24/7 support.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#demo" class="primary-button">
+                        <i class="fas fa-play"></i> Watch AIgent in Action
+                    </a>
+                    <a href="#demo" class="secondary-button">Try Live Demo</a>
+                </div>
+                <div class="hero-features">
+                    <div class="hero-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>No Credit Card Required</span>
+                    </div>
+                    <div class="hero-feature">
+                        <i class="fas fa-clock"></i>
+                        <span>Setup in 5 Minutes</span>
+                    </div>
+                    <div class="hero-feature">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>14-Day Free Trial</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem-section" id="problem">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">The Customer Support Crisis</div>
+                <h2 class="section-title">Growing businesses face an impossible choice: hire more expensive staff or watch customer satisfaction plummet.</h2>
+            </div>
+            <div class="problems-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>High Staff Turnover</h3>
+                    <div class="problem-stat">23%</div>
+                    <p>Customer support teams suffer from high turnover, with constant hiring and training expenses. New hires take weeks to become productive.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Slow Response Times</h3>
+                    <div class="problem-stat">24hrs</div>
+                    <p>Customers wait hours or days for responses to their questions. Frustrated customers leave for competitors who respond faster.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <i class="fas fa-frown"></i>
+                    </div>
+                    <h3>Poor Customer Experience</h3>
+                    <div class="problem-stat">60%</div>
+                    <p>Inconsistent answers, long wait times and repeating questions every call. 60% of customers switch after bad support experiences.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Escalating Costs</h3>
+                    <div class="problem-stat">$50K+</div>
+                    <p>Each customer service agent costs $50K+ annually in salary, benefits and training. Scaling support is expensive and complex.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution-section" id="features">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Meet AIgent - Your AI Workforce</div>
+                <h2 class="section-title">Deploy AI agents that work like real employees, embedded directly in your tech stack. They handle complex conversations, remember context, and integrate with your existing tools.</h2>
+            </div>
+            <div class="solution-content">
+                <div class="solution-features">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Role-Specific AI Agents</h4>
+                            <p>Customer Support, Sales, IT Helpdesk - each agent is trained for specific roles and speaks your brand's voice.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Private Network Deployment</h4>
+                            <p>Your AI agents run inside your infrastructure. No data ever leaves your network. Complete privacy and control.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-plug"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Deep System Integration</h4>
+                            <p>Connects with your CRM, email, Slack, WhatsApp, Google Workspace. Pulls context from all your business tools.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Context Memory</h4>
+                            <p>Remembers every customer interaction, preferences and history. Provides personalized responses at scale.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>10x Faster Response</h4>
+                            <p>AIgent responds to customer inquiries in seconds, not hours. Available when your customers need help.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="solution-visual">
+                    <h3>AIgent Customer Support</h3>
+                    <div class="agent-preview">
+                        <h4>Live Agent Conversation</h4>
+                        <div class="chat-bubble">
+                            <strong>Customer:</strong> "I can't access my account since the password reset"
+                        </div>
+                        <div class="chat-bubble">
+                            <strong>AIgent:</strong> "I see you reset your password 2 hours ago. Let me check your account status. I found the issue - your account was temporarily locked due to multiple login attempts. I've unlocked it and sent you a new verification email. You should be able to log in now."
+                        </div>
+                        <div style="text-align: center; margin-top: 1rem; opacity: 0.8;">
+                            <small>Response time: Under 3 seconds</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="comparison-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Night & Day Difference</div>
+                <h2 class="section-title">See how AIgent transforms your customer support compared to traditional staffing.</h2>
+            </div>
+            <div class="comparison-table">
+                <div class="comparison-header">
+                    <div>Feature</div>
+                    <div>Without AIgent</div>
+                    <div>With AIgent</div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell">Response Time</div>
+                    <div class="comparison-cell negative">
+                        <i class="fas fa-times"></i> Average 24+ hours
+                    </div>
+                    <div class="comparison-cell positive">
+                        <i class="fas fa-check"></i> Under 3 seconds
+                    </div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell">Availability</div>
+                    <div class="comparison-cell negative">
+                        <i class="fas fa-times"></i> Business hours only
+                    </div>
+                    <div class="comparison-cell positive">
+                        <i class="fas fa-check"></i> 24/7 worldwide
+                    </div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell">Context Memory</div>
+                    <div class="comparison-cell negative">
+                        <i class="fas fa-times"></i> Repeat questions every call
+                    </div>
+                    <div class="comparison-cell positive">
+                        <i class="fas fa-check"></i> Remembers every interaction
+                    </div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell">Consistency</div>
+                    <div class="comparison-cell negative">
+                        <i class="fas fa-times"></i> Varies by agent mood/skill
+                    </div>
+                    <div class="comparison-cell positive">
+                        <i class="fas fa-check"></i> Perfect every time
+                    </div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell">Cost per Month</div>
+                    <div class="comparison-cell negative">
+                        <i class="fas fa-times"></i> $4,000+ per agent
+                    </div>
+                    <div class="comparison-cell positive">
+                        <i class="fas fa-check"></i> $149-999 unlimited
+                    </div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell">Training Time</div>
+                    <div class="comparison-cell negative">
+                        <i class="fas fa-times"></i> Weeks to months
+                    </div>
+                    <div class="comparison-cell positive">
+                        <i class="fas fa-check"></i> Setup in 5 minutes
+                    </div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell">Sick Days</div>
+                    <div class="comparison-cell negative">
+                        <i class="fas fa-times"></i> Unpredictable absences
+                    </div>
+                    <div class="comparison-cell positive">
+                        <i class="fas fa-check"></i> Never sick, never tired
+                    </div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell">Scaling</div>
+                    <div class="comparison-cell negative">
+                        <i class="fas fa-times"></i> Hire & train each agent
+                    </div>
+                    <div class="comparison-cell positive">
+                        <i class="fas fa-check"></i> Instant unlimited capacity
+                    </div>
+                </div>
+                <div class="comparison-result">
+                    Result: 90% cost reduction + 10x faster support
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Simple, Transparent Pricing</div>
+                <h2 class="section-title">Choose the plan that fits your team size. All plans include 14-day free trial.</h2>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="plan-name">Basic</div>
+                    <div class="plan-price">$149<span>/month</span></div>
+                    <div class="plan-description">Perfect for small teams getting started</div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> 1 AI Agent (Customer Support)</li>
+                        <li><i class="fas fa-check"></i> Up to 1,000 conversations/month</li>
+                        <li><i class="fas fa-check"></i> Email & chat integration</li>
+                        <li><i class="fas fa-check"></i> Basic CRM connection</li>
+                        <li><i class="fas fa-check"></i> Standard response time</li>
+                        <li><i class="fas fa-check"></i> Email support</li>
+                    </ul>
+                    <button class="plan-button">Start Free Trial</button>
+                </div>
+                <div class="pricing-card popular">
+                    <div class="plan-name">Pro</div>
+                    <div class="plan-price">$399<span>/month</span></div>
+                    <div class="plan-description">For growing businesses with multiple roles</div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> 3 AI Agents (Support, Sales, IT)</li>
+                        <li><i class="fas fa-check"></i> Up to 5,000 conversations/month</li>
+                        <li><i class="fas fa-check"></i> Full integration suite</li>
+                        <li><i class="fas fa-check"></i> Advanced CRM + Google Workspace</li>
+                        <li><i class="fas fa-check"></i> Priority response time</li>
+                        <li><i class="fas fa-check"></i> Phone & chat support</li>
+                        <li><i class="fas fa-check"></i> Custom training data</li>
+                        <li><i class="fas fa-check"></i> Analytics dashboard</li>
+                    </ul>
+                    <button class="plan-button">Start Free Trial</button>
+                </div>
+                <div class="pricing-card">
+                    <div class="plan-name">Enterprise</div>
+                    <div class="plan-price">$999<span>/month</span></div>
+                    <div class="plan-description">Custom solution for large organizations</div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> Unlimited AI Agents</li>
+                        <li><i class="fas fa-check"></i> Unlimited conversations</li>
+                        <li><i class="fas fa-check"></i> White-label deployment</li>
+                        <li><i class="fas fa-check"></i> Custom integrations</li>
+                        <li><i class="fas fa-check"></i> Dedicated infrastructure</li>
+                        <li><i class="fas fa-check"></i> 24/7 priority support</li>
+                        <li><i class="fas fa-check"></i> Custom AI training</li>
+                        <li><i class="fas fa-check"></i> Advanced security</li>
+                        <li><i class="fas fa-check"></i> SLA guarantees</li>
+                    </ul>
+                    <button class="plan-button">Contact Sales</button>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 3rem; color: #64748b;">
+                All plans include 14-day free trial • No setup fees • Cancel anytime
+            </div>
+            <div class="cta-features">
+                <div class="cta-feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>No credit card required</span>
+                </div>
+                <div class="cta-feature">
+                    <i class="fas fa-clock"></i>
+                    <span>Setup in 5 minutes</span>
+                </div>
+                <div class="cta-feature">
+                    <i class="fas fa-times-circle"></i>
+                    <span>Cancel anytime</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Trusted by Growing Companies</div>
+                <h2 class="section-title">See how businesses like yours are transforming customer support with AIgent.</h2>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <div class="testimonial-text">
+                        "AIgent reduced our response time from 6 hours to under 30 seconds. Our customer satisfaction scores jumped 40% in just 2 months. The ROI is incredible - we're saving $2,400/month."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SC</div>
+                        <div class="author-info">
+                            <h5>Sarah Chen</h5>
+                            <p>Operations Manager • TechFlow Solutions</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <div class="testimonial-text">
+                        "We were spending $25K/month on customer support staff. AIgent does the same work for $399/month and handles 5x more conversations. Our team can now focus on growing the business."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MR</div>
+                        <div class="author-info">
+                            <h5>Marcus Rodriguez</h5>
+                            <p>Founder • GrowthLabs Inc</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <div class="testimonial-text">
+                        "The private network deployment was crucial for us. AIgent integrates with our existing security protocols while our support team is productive from day one. Amazing results."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">EP</div>
+                        <div class="author-info">
+                            <h5>Emily Park</h5>
+                            <p>CTO • DataSync Pro</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-number">90%</div>
+                    <div class="stat-label">Cost Reduction</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">10x</div>
+                    <div class="stat-label">Faster Response</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">40%</div>
+                    <div class="stat-label">Higher Satisfaction</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Availability</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Integrations Section -->
+    <section class="integrations-section" id="integrations">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Seamless Integration</div>
+                <h2 class="section-title">AIgent connects to your existing tools and pulls context from all your business systems. No data migration required - just connect and go.</h2>
+            </div>
+            <div class="integrations-grid">
+                <div class="integration-card">
+                    <div class="integration-icon crm">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="integration-name">CRM Systems</div>
+                    <div class="integration-description">Salesforce, HubSpot, Pipedrive, Zoho</div>
+                </div>
+                <div class="integration-card">
+                    <div class="integration-icon email">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="integration-name">Email</div>
+                    <div class="integration-description">Gmail, Outlook, Office 365</div>
+                </div>
+                <div class="integration-card">
+                    <div class="integration-icon messaging">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <div class="integration-name">Messaging</div>
+                    <div class="integration-description">WhatsApp Business, SMS, Telegram</div>
+                </div>
+                <div class="integration-card">
+                    <div class="integration-icon chat">
+                        <i class="fab fa-slack"></i>
+                    </div>
+                    <div class="integration-name">Team Chat</div>
+                    <div class="integration-description">Slack, Microsoft Teams, Discord</div>
+                </div>
+                <div class="integration-card">
+                    <div class="integration-icon workspace">
+                        <i class="fab fa-google"></i>
+                    </div>
+                    <div class="integration-name">Google Workspace</div>
+                    <div class="integration-description">Gmail, Drive, Calendar, Sheets</div>
+                </div>
+                <div class="integration-card">
+                    <div class="integration-icon phone">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="integration-name">Voice & Phone</div>
+                    <div class="integration-description">Twilio, Zoom Phone, RingCentral</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 3rem;">
+                <div class="section-badge">One API, Infinite Possibilities</div>
+                <p style="color: #64748b; margin-top: 1rem;">
+                    Our universal API can connect to any system you use. Custom integrations available for Enterprise customers.
+                </p>
+                <div style="background: #f8fafc; padding: 2rem; border-radius: 15px; margin-top: 2rem; text-align: left; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    <code style="color: #667eea;">
+                        // Connect any system in seconds<br>
+                        aigent.connect('your-crm-system')<br>
+                        .auth('your-credentials')<br>
+                        .deploy('customer-support-agent')
+                    </code>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="demo">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Transform Your Customer Support?</h2>
+                <p>Join hundreds of businesses using AIgent to provide faster, better customer support at a fraction of the cost.</p>
+                <div class="hero-buttons">
+                    <a href="#" class="primary-button">
+                        <i class="fas fa-play"></i> Watch Demo Video
+                    </a>
+                    <a href="#demo-form" class="secondary-button">Get Live Demo</a>
+                </div>
+                <div class="cta-form" id="demo-form">
+                    <h3>Try a Live AIgent Demo - No Credit Card Needed</h3>
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text" id="firstName" name="firstName" placeholder="Your first name..." required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" id="lastName" name="lastName" placeholder="Your last name..." required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Business Email</label>
+                                <input type="email" id="email" name="email" placeholder="your@company.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="company">Company</label>
+                                <input type="text" id="company" name="company" placeholder="Your company name..." required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" placeholder="+1 (555) 123-4567">
+                            </div>
+                            <div class="form-group">
+                                <label for="teamSize">Team Size</label>
+                                <select id="teamSize" name="teamSize" required>
+                                    <option value="">Select team size...</option>
+                                    <option value="1-10">1-10 employees</option>
+                                    <option value="11-50">11-50 employees</option>
+                                    <option value="51-200">51-200 employees</option>
+                                    <option value="200+">200+ employees</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="useCase">How would you like to use AIgent?</label>
+                            <textarea id="useCase" name="useCase" rows="4" placeholder="Tell us about your customer support challenges and goals..."></textarea>
+                        </div>
+                        <button type="submit" class="submit-button">
+                            Get My Free AIgent Demo
+                        </button>
+                    </form>
+                    <div class="cta-features">
+                        <div class="cta-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>No credit card required</span>
+                        </div>
+                        <div class="cta-feature">
+                            <i class="fas fa-clock"></i>
+                            <span>Setup in 5 minutes</span>
+                        </div>
+                        <div class="cta-feature">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>14-day free trial</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="#home" class="footer-logo" style="display: inline-block; margin-bottom: 1rem;">
+                        <img src="colibry-footer-logo.png" alt="Colibry Logo" style="height: 120px; width: auto; display: block;" />
+                    </a>
+                    <p>Deploy AI agents that work like real employees, embedded directly in your tech stack. Transform your customer support with AI that integrates with your existing tools.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#integrations">Integrations</a></li>
+                        <li><a href="#demo">Demo</a></li>
+                        <li><a href="#">Security</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Partners</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">Status</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">GDPR</a></li>
+                        <li><a href="#">Security</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 Colibry. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission handler
+        document.querySelector('#demo-form form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+
+            // Simulate form submission
+            const submitButton = this.querySelector('.submit-button');
+            const originalText = submitButton.textContent;
+
+            submitButton.textContent = 'Scheduling Your Demo...';
+            submitButton.disabled = true;
+
+            setTimeout(() => {
+                submitButton.textContent = '✓ Demo Scheduled! Check Your Email';
+                submitButton.style.background = '#10b981';
+
+                setTimeout(() => {
+                    submitButton.textContent = originalText;
+                    submitButton.style.background = '';
+                    submitButton.disabled = false;
+                    this.reset();
+                }, 3000);
+            }, 2000);
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        // Add fade-in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function (entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections for animation
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Add mobile menu toggle (basic implementation)
+        const createMobileMenu = () => {
+            const nav = document.querySelector('nav');
+            const navLinks = document.querySelector('.nav-links');
+
+            if (window.innerWidth <= 768) {
+                if (!document.querySelector('.mobile-menu-toggle')) {
+                    const menuToggle = document.createElement('button');
+                    menuToggle.className = 'mobile-menu-toggle';
+                    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                    menuToggle.style.cssText = `
+                                        background: none;
+                                        border: none;
+                                        font-size: 1.5rem;
+                                        color: #333;
+                                        cursor: pointer;
+                                        display: block;
+                                    `;
+
+                    menuToggle.addEventListener('click', () => {
+                        navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                        navLinks.style.flexDirection = 'column';
+                        navLinks.style.position = 'absolute';
+                        navLinks.style.top = '100%';
+                        navLinks.style.left = '0';
+                        navLinks.style.right = '0';
+                        navLinks.style.background = 'white';
+                        navLinks.style.padding = '1rem';
+                        navLinks.style.boxShadow = '0 5px 20px rgba(0,0,0,0.1)';
+                    });
+
+                    nav.appendChild(menuToggle);
+                }
+            }
+        };
+
+        // Initialize mobile menu
+        createMobileMenu();
+        window.addEventListener('resize', createMobileMenu);
+
+        // Add typing effect to hero text
+        const heroTitle = document.querySelector('.hero h1');
+        const originalText = heroTitle.innerHTML;
+
+        const typeWriter = (element, text, speed = 50) => {
+            element.innerHTML = '';
+            let i = 0;
+            const timer = setInterval(() => {
+                if (text.charAt(i) === '<') {
+                    let tag = '';
+                    while (text.charAt(i) !== '>' && i < text.length) {
+                        tag += text.charAt(i);
+                        i++;
+                    }
+                    tag += text.charAt(i);
+                    element.innerHTML += tag;
+                } else {
+                    element.innerHTML += text.charAt(i);
+                }
+                i++;
+                if (i > text.length) {
+                    clearInterval(timer);
+                }
+            }, speed);
+        };
+
+        // Start typing effect after page load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                typeWriter(heroTitle, originalText, 30);
+            }, 500);
+        });
+
+        // Add particles effect to hero background
+        const createParticles = () => {
+            const hero = document.querySelector('.hero');
+            const particlesContainer = document.createElement('div');
+            particlesContainer.className = 'particles-container';
+            particlesContainer.style.cssText = `
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                width: 100%;
+                                height: 100%;
+                                overflow: hidden;
+                                z-index: 1;
+                            `;
+
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.style.cssText = `
+                                    position: absolute;
+                                    width: 2px;
+                                    height: 2px;
+                                    background: rgba(255, 255, 255, 0.5);
+                                    border-radius: 50%;
+                                    left: ${Math.random() * 100}%;
+                                    top: ${Math.random() * 100}%;
+                                    animation: float ${5 + Math.random() * 10}s infinite linear;
+                                `;
+                particlesContainer.appendChild(particle);
+            }
+
+            hero.appendChild(particlesContainer);
+        };
+
+        createParticles();
+
+        // Add scroll progress indicator
+        const createScrollProgress = () => {
+            const progressBar = document.createElement('div');
+            progressBar.style.cssText = `
+                                position: fixed;
+                                top: 0;
+                                left: 0;
+                                width: 0%;
+                                height: 3px;
+                                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                                z-index: 9999;
+                                transition: width 0.3s ease;
+                            `;
+            document.body.appendChild(progressBar);
+
+            window.addEventListener('scroll', () => {
+                const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+                progressBar.style.width = scrollPercent + '%';
+            });
+        };
+
+        createScrollProgress();
+
+        // Add number counter animation for stats
+        const animateNumbers = () => {
+            const numbers = document.querySelectorAll('.stat-number, .problem-stat');
+
+            const countUp = (element, target, duration = 2000) => {
+                const start = 0;
+                const increment = target / (duration / 16);
+                let current = start;
+
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        element.textContent = target;
+                        clearInterval(timer);
+                    } else {
+                        element.textContent = Math.floor(current);
+                    }
+                }, 16);
+            };
+
+            const numberObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = entry.target.textContent.replace(/[^\d]/g, '');
+                        if (target) {
+                            countUp(entry.target, parseInt(target));
+                        }
+                        numberObserver.unobserve(entry.target);
+                    }
+                });
+            });
+
+            numbers.forEach(number => numberObserver.observe(number));
+        };
+
+        animateNumbers();
+
+        // Add hover effects for cards
+        const addCardEffects = () => {
+            const cards = document.querySelectorAll('.problem-card, .testimonial-card, .integration-card, .pricing-card');
+
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function () {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                    this.style.transition = 'all 0.3s ease';
+                });
+
+                card.addEventListener('mouseleave', function () {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        };
+
+        addCardEffects();
+
+        // Add form validation
+        const validateForm = () => {
+            const form = document.querySelector('#demo-form form');
+            const inputs = form.querySelectorAll('input[required], select[required]');
+
+            inputs.forEach(input => {
+                input.addEventListener('blur', function () {
+                    if (!this.value.trim()) {
+                        this.style.borderColor = '#ef4444';
+                        this.style.background = 'rgba(239, 68, 68, 0.1)';
+                    } else {
+                        this.style.borderColor = '#10b981';
+                        this.style.background = 'rgba(16, 185, 129, 0.1)';
+                    }
+                });
+
+                input.addEventListener('focus', function () {
+                    this.style.borderColor = 'rgba(255, 255, 255, 0.8)';
+                    this.style.background = 'rgba(255, 255, 255, 0.2)';
+                });
+            });
+        };
+
+        validateForm();
+
+        // Add testimonials rotation
+        const rotateTestimonials = () => {
+            const testimonials = document.querySelectorAll('.testimonial-card');
+            let currentIndex = 0;
+
+            const showTestimonial = (index) => {
+                testimonials.forEach((testimonial, i) => {
+                    if (i === index) {
+                        testimonial.style.opacity = '1';
+                        testimonial.style.transform = 'translateY(0)';
+                    } else {
+                        testimonial.style.opacity = '0.7';
+                        testimonial.style.transform = 'translateY(10px)';
+                    }
+                });
+            };
+
+            // Auto-rotate testimonials every 5 seconds
+            setInterval(() => {
+                currentIndex = (currentIndex + 1) % testimonials.length;
+                showTestimonial(currentIndex);
+            }, 5000);
+        };
+
+        // Add copy to clipboard for API code
+        const addCopyFunction = () => {
+            const codeBlock = document.querySelector('code');
+            if (codeBlock) {
+                const copyButton = document.createElement('button');
+                copyButton.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                copyButton.style.cssText = `
+                                    position: absolute;
+                                    top: 10px;
+                                    right: 10px;
+                                    background: #667eea;
+                                    color: white;
+                                    border: none;
+                                    padding: 0.5rem 1rem;
+                                    border-radius: 5px;
+                                    cursor: pointer;
+                                    font-size: 0.8rem;
+                                `;
+
+                copyButton.addEventListener('click', () => {
+                    navigator.clipboard.writeText(codeBlock.textContent.trim());
+                    copyButton.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    setTimeout(() => {
+                        copyButton.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                    }, 2000);
+                });
+
+                codeBlock.parentElement.style.position = 'relative';
+                codeBlock.parentElement.appendChild(copyButton);
+            }
+        };
+
+        addCopyFunction();
+
+        // Initialize all animations and effects
+        setTimeout(() => {
+            document.body.style.opacity = '1';
+            document.body.style.transform = 'translateY(0)';
+        }, 100);
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const mobileMenu = document.querySelector('.nav-links');
+                if (mobileMenu && mobileMenu.style.display === 'flex') {
+                    mobileMenu.style.display = 'none';
+                }
+            }
+        });
+
+        // Performance optimization: Lazy load images
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        if (img.dataset.src) {
+                            img.src = img.dataset.src;
+                            img.classList.remove('lazy');
+                            imageObserver.unobserve(img);
+                        }
+                    }
+                });
+            });
+
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+
+        // Hamburger menu logic
+        const hamburger = document.querySelector('.hamburger');
+        const dropdownMenu = document.querySelector('.dropdown-menu');
+
+        hamburger.addEventListener('click', function () {
+            const isActive = hamburger.classList.toggle('active');
+            dropdownMenu.classList.toggle('show', isActive);
+            hamburger.setAttribute('aria-expanded', isActive);
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!hamburger.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                hamburger.classList.remove('active');
+                dropdownMenu.classList.remove('show');
+                hamburger.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        console.log('🚀 AIgent website loaded successfully!');
+    </script>
+</body>
+</html>
